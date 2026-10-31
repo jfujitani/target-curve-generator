@@ -1,0 +1,11 @@
+# Source Excel workbooks
+source_excel/
+
+# Python cache & test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Exported REW target files
+rew_targets/
+output/
