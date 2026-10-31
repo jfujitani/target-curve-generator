@@ -1,0 +1,31 @@
+MIT License
+
+Copyright (c) 2026 Target Curve Generator Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+### Third-Party & Heritage Notices
+
+- **Bundled Client-Side Libraries**:
+  - **Chart.js** (`web/vendor/chart.min.js`): Licensed under the MIT License, Copyright (c) 2014-2023 Chart.js Contributors.
+  - **JSZip** (`web/vendor/jszip.min.js`): Licensed under the MIT License / Dual GPLv3, Copyright (c) 2009-2016 Stuart Knightley.
+- **Acoustic Design Lineage**:
+  - The acoustic crossover concepts, cascaded biquad $Q$-stage coefficients, and reference frequency target curves implemented in this software are derived from public domain engineering principles and community research (including prior art from *Jazzi's Tuning Companion* and *JEB Tuning Companion*). Original Excel workbooks were shared freely with the audio community for public use.

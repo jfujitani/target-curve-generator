@@ -9,3 +9,6 @@ __pycache__/
 # Exported REW target files
 rew_targets/
 output/
+
+# Test output
+test_output/

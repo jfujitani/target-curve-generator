@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Target Curve Generator (tcg) — Audio Target Studio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Offline standalone vendor libraries -->
+  <script src="vendor/chart.min.js"></script>
+  <script src="vendor/jszip.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="brand-title">
+      <h1>Target Curve Generator</h1>
+      <span class="badge">tcg</span>
+    </div>
+
+    <div class="top-bar-controls">
+      <!-- House Curve Selector -->
+      <div class="control-item">
+        <label for="curveSelect">Target Curve:</label>
+        <select id="curveSelect"></select>
+        <button class="btn btn-sm" id="btnManageCurves" title="Import or manage custom curves">Manage / Import</button>
+        <button class="btn btn-sm" id="btnEditCurve" title="Edit individual frequency dB points">Edit Points</button>
+      </div>
+
+      <!-- Global Offset -->
+      <div class="control-item">
+        <label for="globalOffset">Offset (dB):</label>
+        <input type="number" id="globalOffset" value="0.0" step="0.5" style="width: 65px;" />
+      </div>
+
+      <!-- Vertical Scale Range Selector -->
+      <div class="control-item">
+        <label for="dbRangeSelect">dB Range:</label>
+        <select id="dbRangeSelect">
+          <option value="default" selected>Standard (-40 to +30 dB)</option>
+          <option value="tuning">Tuning Zoom (-25 to +20 dB)</option>
+          <option value="critical">Critical Focus (-15 to +15 dB)</option>
+          <option value="deep">Wide Dynamic (-60 to +30 dB)</option>
+        </select>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="control-item">
+        <button class="btn btn-primary" id="btnExportZip">Export All (.zip)</button>
+        <button class="btn" id="btnResetDefaults">Reset Crossovers</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Classical Audio Logarithmic Chart -->
+  <section class="chart-section">
+    <canvas id="mainAudioChart"></canvas>
+  </section>
+
+  <!-- Speaker Channels Deck -->
+  <section class="deck-section">
+    <div class="deck-header">
+      <div class="deck-title">Active Speaker Channels & Crossover Matrix</div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">
+        Acoustic summation (red dashed trace) updates live with coherent phase alignment.
+      </div>
+    </div>
+
+    <div class="channels-deck" id="channelsContainer">
+      <!-- Injected dynamically by app.js -->
+    </div>
+  </section>
+
+  <!-- Curve Import & Management Modal -->
+  <div class="modal-overlay" id="modalManageCurves">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">Import & Manage Custom House Curves</div>
+        <button class="close-btn" data-close="modalManageCurves">&times;</button>
+      </div>
+
+      <div class="drop-zone" id="fileDropZone">
+        <div style="font-size: 1.1rem; margin-bottom: 6px;">Drag & Drop REW Curve File Here</div>
+        <div style="font-size: 0.8rem;">Supports .txt and .csv (Frequency & dB)</div>
+        <input type="file" id="fileInput" accept=".txt,.csv" style="display: none;" />
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+        <input type="text" id="importCurveName" placeholder="Curve Name (e.g. My Cabin Target)" style="flex: 1;" />
+        <button class="btn btn-primary" id="btnSaveImportedCurve" disabled>Save to Library</button>
+      </div>
+
+      <div class="modal-title" style="font-size: 0.95rem; margin-bottom: 8px;">Saved Custom Curves</div>
+      <div id="customCurvesList" style="margin-bottom: 16px; font-size: 0.85rem; color: var(--text-muted);">
+        <!-- Populated dynamically -->
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--card-border); padding-top: 14px;">
+        <button class="btn btn-sm" id="btnExportLibraryJson">Backup Library (JSON)</button>
+        <label class="btn btn-sm" style="cursor: pointer;">
+          Restore Library (JSON)
+          <input type="file" id="jsonLibraryInput" accept=".json" style="display: none;" />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Curve Points Editor Modal -->
+  <div class="modal-overlay" id="modalEditCurve">
+    <div class="modal-box" style="max-width: 500px;">
+      <div class="modal-header">
+        <div class="modal-title" id="editCurveTitle">Edit Curve Points</div>
+        <button class="close-btn" data-close="modalEditCurve">&times;</button>
+      </div>
+
+      <div style="margin-bottom: 12px; font-size: 0.82rem; color: var(--text-muted);">
+        Fine-tune target dB values directly for each 1/3-octave ISO band.
+      </div>
+
+      <div style="max-height: 55vh; overflow-y: auto;">
+        <table class="curve-points-table">
+          <thead>
+            <tr>
+              <th>Frequency (Hz)</th>
+              <th>Target dB</th>
+            </tr>
+          </thead>
+          <tbody id="pointsTableBody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; border-top: 1px solid var(--card-border); padding-top: 12px;">
+        <button class="btn" data-close="modalEditCurve">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveEditedPoints">Apply & Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

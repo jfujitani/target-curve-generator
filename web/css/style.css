@@ -1,0 +1,367 @@
+:root {
+  --bg-color: #0f1013;
+  --card-bg: #17181f;
+  --card-sub-bg: #121318;
+  --card-border: #282a35;
+  --border-focus: #00e5ff;
+  --text-main: #f0f2f8;
+  --text-muted: #8c92a4;
+  --accent: #00e5ff;
+  --accent-hover: #33ebff;
+  --danger: #ff5252;
+  --success: #00e676;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  padding: 16px 20px 40px 20px;
+  line-height: 1.4;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.brand-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.badge {
+  font-size: 0.72rem;
+  background: #252838;
+  color: #a0a8be;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid var(--card-border);
+  font-weight: 600;
+}
+
+.top-bar-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+select, input[type=text], input[type=number] {
+  background: var(--card-sub-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-main);
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+select:focus, input:focus {
+  border-color: var(--accent);
+}
+
+.btn {
+  background: #242734;
+  color: var(--text-main);
+  border: 1px solid var(--card-border);
+  padding: 7px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn:hover {
+  background: #2f3446;
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #0b0c10;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  color: #000;
+}
+
+.btn-sm {
+  padding: 3px 8px;
+  font-size: 0.76rem;
+}
+
+.btn-danger {
+  border-color: #552222;
+  color: #ff8888;
+}
+
+.btn-danger:hover {
+  background: #441a1a;
+  border-color: var(--danger);
+}
+
+/* Main Layout */
+.chart-section {
+  background: #13141a;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px 14px 10px 14px;
+  height: 58vh;
+  min-height: 420px;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+}
+
+.deck-section {
+  margin-bottom: 20px;
+}
+
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.deck-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.channels-deck {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.channel-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.channel-card.inactive {
+  opacity: 0.45;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.channel-tag-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.channel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crossover-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--card-sub-bg);
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #1f212a;
+}
+
+.crossover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.crossover-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type=range] {
+  flex: 1;
+  height: 5px;
+  background: #252836;
+  border-radius: 3px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.freq-input {
+  width: 72px;
+  text-align: right;
+  padding: 3px 6px;
+  font-size: 0.8rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+  border-top: 1px solid #20222b;
+}
+
+/* Modals */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-box {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 22px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #fff;
+}
+
+.drop-zone {
+  border: 2px dashed #3a3f52;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: var(--card-sub-bg);
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--accent);
+  color: var(--text-main);
+  background: #191c26;
+}
+
+.curve-points-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 10px;
+}
+
+.curve-points-table th, .curve-points-table td {
+  padding: 6px 10px;
+  border: 1px solid var(--card-border);
+  text-align: left;
+}
+
+.curve-points-table th {
+  background: var(--card-sub-bg);
+  color: var(--text-muted);
+}
+
+.btn-bypassed {
+  background: #3e2723;
+  color: #ffab91;
+  border-color: #ff7043;
+  font-weight: 600;
+}
+.btn-bypassed:hover {
+  background: #4e342e;
+  border-color: #ff8a65;
+}
