@@ -37,7 +37,7 @@ This document describes the capabilities, acoustic crossover design, preset curv
 ## 2. Workflow Guide: Using with Room EQ Wizard (REW)
 
 1. **Design Target in `tcg`**:
-   - Run `python3 tcg.py` or double-click `web/index.html`.
+   - Run `python3 tcg.py`.
    - Select your target curve and configure your driver crossover frequencies.
    - Click **Export All (.zip)** to save the set of REW `.txt` files.
 2. **Import into REW**:

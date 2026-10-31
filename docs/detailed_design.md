@@ -94,4 +94,4 @@ python3 tcg.py
 ```
 *(Optional port: `python3 tcg.py --port 8080`)*
 
-Alternatively, double-click `web/index.html` to run completely offline without starting Python.
+The application runs completely offline with no external internet connection or npm build steps required. Python's standard library `http.server` handles local serving to satisfy browser ES module security policies.
