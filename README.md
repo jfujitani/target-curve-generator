@@ -44,8 +44,7 @@ For comprehensive engineering specifications, architecture diagrams, and domain 
 
 ## Quick Start
 
-### Option 1: Run via Python (Recommended for Local Use)
-Launch the built-in local server and automatically open the studio in your default browser:
+Launch the built-in local runner to start the server and automatically open the studio in your default browser:
 
 ```bash
 python3 tcg.py
@@ -56,8 +55,7 @@ To specify a custom port:
 python3 tcg.py --port 9000
 ```
 
-### Option 2: Pure Static Web (No Server Required)
-Open `web/index.html` directly in any modern browser (Chrome, Firefox, Safari, Edge). You can also host the `web/` folder on GitHub Pages, Netlify, or any static file host.
+> **Note on Static Hosting**: You can also host the `web/` directory on any static web host or service (such as GitHub Pages or Netlify). Because modern web browsers restrict ES module imports over direct `file://` URLs for security (CORS), run `python3 tcg.py` when using it locally.
 
 ---
 
