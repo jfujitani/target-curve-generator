@@ -53,8 +53,19 @@ flowchart TD
 
 ### Core Target Curve & Crossover Engine (Feature 1)
 
-#### [NEW] `jazzi_rew.py`
-A single, self-contained cross-platform Python CLI tool with zero external dependencies (standard library only, using `math` / `cmath`):
+As detailed in [`docs/architecture.md`](./docs/architecture.md) and [`docs/detailed_design.md`](./docs/detailed_design.md), the implementation is structured into a clean modular package (`jazzi_tuning/`) with a top-level executable CLI (`jazzi_rew.py`):
+
+#### [NEW] `jazzi_tuning/` package & `jazzi_rew.py`
+A modular, cross-platform Python CLI tool with zero external dependencies (standard library only, using `math` / `cmath`):
+- `jazzi_tuning/core/constants.py`: 31-band ISO frequencies & preset house curves database.
+- `jazzi_tuning/core/models.py`: DTOs, Enums, ChannelConfig, TargetProfileRequest, TargetCurveResult.
+- `jazzi_tuning/core/filter_engine.py`: Analytical transfer functions & cascaded Q-matrix.
+- `jazzi_tuning/core/synthesizer.py`: Orchestrator & target response vector synthesis.
+- `jazzi_tuning/storage/rew_exporter.py`: REW space-delimited text serialization & atomic file operations.
+- `jazzi_tuning/cli/parser.py`: Argparse CLI flags for batch execution.
+- `jazzi_tuning/cli/wizard.py`: Guided interactive terminal walkthrough.
+- `jazzi_rew.py`: Clean executable entrypoint invoking the CLI.
+
 - **Built-in Presets Database**:
   - `Whitledge`: +24 dB at 20 Hz down to -10 dB at 20 kHz.
   - `.5 Whitledge`: Half-amplitude Whitledge (+12 dB to -5 dB).
