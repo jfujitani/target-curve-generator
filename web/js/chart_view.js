@@ -1,9 +1,29 @@
 /**
  * Classical Audio Logarithmic Chart Manager using Chart.js.
- * Configured with standard decade lines (20, 100, 1k, 10k, 20k) and audio subgrid.
+ * Configured with standard classical audio decade lines (10, 100, 1k, 10k),
+ * semi-major lines (20, 50, 200, 500, 2k, 5k, 20k), and full 1-2-3-4-5-6-7-8-9
+ * sub-octave grid spacing across the complete 10 Hz – 20 kHz audio range (3.301 decades).
+ *
+ * Each of the full audio decades (10–100 Hz, 100 Hz–1 kHz, 1 kHz–10 kHz) occupies
+ * an identical physical pixel width on screen, exactly matching REW and Audio Precision.
  */
 
-const MAJOR_AUDIO_TICKS = [20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
+// Explicit classical audio frequency grid lines from 10 Hz to 20,000 Hz
+export const AUDIO_TICKS = [
+  10, 20, 30, 40, 50, 60, 70, 80, 90,
+  100, 200, 300, 400, 500, 600, 700, 800, 900,
+  1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000,
+  10000, 20000
+];
+
+// Major decade boundaries (bold primary grid lines)
+export const MAJOR_DECADE_TICKS = [10, 100, 1000, 10000];
+
+// Semi-major intermediate division lines
+export const SEMI_MAJOR_TICKS = [20, 50, 200, 500, 2000, 5000, 20000];
+
+// Standard audio frequency labels shown along the X-axis
+export const LABELED_AUDIO_TICKS = [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000];
 
 export const DB_RANGE_PRESETS = {
   default: { label: "Standard (-40 to +30 dB)", min: -40, max: 30, stepSize: 10 },
@@ -64,7 +84,7 @@ export class AudioChart {
         scales: {
           x: {
             type: "logarithmic",
-            min: 20,
+            min: 10,
             max: 20000,
             title: {
               display: true,
@@ -72,25 +92,42 @@ export class AudioChart {
               color: "#8b92a5",
               font: { size: 12, weight: 600 }
             },
+            // Enforce exact classical audio grid ticks across complete 10 Hz – 20 kHz span
+            afterBuildTicks: (scale) => {
+              scale.ticks = AUDIO_TICKS.map(f => ({ value: f }));
+            },
             grid: {
               color: (context) => {
                 const v = Math.round(context.tick.value);
-                if ([20, 100, 1000, 10000, 20000].includes(v)) return "#42495d"; // Major decade lines
-                if (MAJOR_AUDIO_TICKS.includes(v)) return "#282d3b";            // Semi-major
-                return "#191d26";                                              // Sub-octave lines
+                if (MAJOR_DECADE_TICKS.includes(v)) return "#4e566d"; // Prominent decade grid line (10, 100, 1k, 10k)
+                if (SEMI_MAJOR_TICKS.includes(v)) return "#2d3342";   // Semi-major grid line (20, 50, 200, 500, 2k, 5k, 20k)
+                return "#191c24";                                     // Fine sub-grid line (30, 40, 60, 70, 80, 90, 300, etc.)
               },
               lineWidth: (context) => {
                 const v = Math.round(context.tick.value);
-                return [20, 100, 1000, 10000, 20000].includes(v) ? 1.5 : 0.8;
+                if (MAJOR_DECADE_TICKS.includes(v)) return 1.5;
+                if (SEMI_MAJOR_TICKS.includes(v)) return 1.0;
+                return 0.75;
               }
             },
             ticks: {
-              color: "#8b92a5",
-              font: { size: 11 },
+              color: (context) => {
+                const v = Math.round(context.tick.value);
+                if (MAJOR_DECADE_TICKS.includes(v)) return "#00e5ff"; // Subtle accent for decade labels
+                return "#8b92a5";
+              },
+              font: (context) => {
+                const v = Math.round(context.tick.value);
+                const isDecade = MAJOR_DECADE_TICKS.includes(v);
+                return {
+                  size: isDecade ? 11.5 : 10.5,
+                  weight: isDecade ? "600" : "500"
+                };
+              },
               autoSkip: false,
               callback: (val) => {
                 const v = Math.round(Number(val));
-                if (!MAJOR_AUDIO_TICKS.includes(v)) return null;
+                if (!LABELED_AUDIO_TICKS.includes(v)) return null;
                 return v >= 1000 ? `${v / 1000}k` : v.toString();
               }
             }
@@ -106,7 +143,7 @@ export class AudioChart {
             },
             grid: {
               color: (context) => {
-                return context.tick.value === 0 ? "#42495d" : "#202430";
+                return context.tick.value === 0 ? "#4e566d" : "#202430";
               },
               lineWidth: (context) => {
                 return context.tick.value === 0 ? 1.5 : 1;

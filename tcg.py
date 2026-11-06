@@ -24,6 +24,13 @@ def serve_web_app(port: int = 8080, open_browser: bool = True) -> int:
         def __init__(self, *args, **kwargs):
             super().__init__(*args, directory=str(web_dir), **kwargs)
 
+        def end_headers(self):
+            # Prevent browser caching during local tuning
+            self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Expires", "0")
+            super().end_headers()
+
         def log_message(self, format, *args):
             # Quiet console output
             pass

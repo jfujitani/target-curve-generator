@@ -9,8 +9,8 @@ export const ISO_FREQUENCIES_31 = [
   10000, 12000, 16000, 20000
 ];
 
-// 220 logarithmically spaced calculation points for ultra-smooth graph rendering
-export function generateLogFrequencies(minFreq = 20, maxFreq = 20000, points = 220) {
+// 250 logarithmically spaced calculation points from 10 Hz to 20,000 Hz for ultra-smooth graph rendering
+export function generateLogFrequencies(minFreq = 10, maxFreq = 20000, points = 250) {
   const freqs = [];
   const minLog = Math.log10(minFreq);
   const maxLog = Math.log10(maxFreq);
@@ -21,7 +21,7 @@ export function generateLogFrequencies(minFreq = 20, maxFreq = 20000, points = 2
   return freqs;
 }
 
-export const HIGH_RES_FREQS = generateLogFrequencies();
+export const HIGH_RES_FREQS = generateLogFrequencies(10, 20000, 250);
 
 export const Q_STAGES = {
   LR12: [0.5],
@@ -79,16 +79,23 @@ export function interpolateLogCurve(isoFreqs, isoValues, targetFreqs) {
 /**
  * Coherent acoustic summation across all active driver channels:
  * Total Gain = sum( 10^(A_c / 20) )
- * Summed dB = BaseHouseCurve + Offset + 20 * log10(Total Gain)
+ * Summed Target = BaseHouseCurve + Offset + 20 * log10(Total Gain)
  */
 export function computeAcousticSummation(baseCurve, channelAttenuations, offsetDb = 0.0) {
-  return baseCurve.map((baseVal, i) => {
-    let sumAmp = 0.0;
-    for (const att of channelAttenuations) {
-      sumAmp += Math.pow(10.0, att[i] / 20.0);
+  const points = baseCurve.length;
+  if (!channelAttenuations || channelAttenuations.length === 0) {
+    return baseCurve.map(v => v + offsetDb);
+  }
+
+  const result = [];
+  for (let i = 0; i < points; i++) {
+    let totalAmp = 0.0;
+    for (const atten of channelAttenuations) {
+      totalAmp += Math.pow(10.0, atten[i] / 20.0);
     }
-    const sumDb = sumAmp <= 1e-6 ? -120.0 : 20.0 * Math.log10(sumAmp);
-    const total = baseVal + offsetDb + sumDb;
-    return Math.abs(total) < 0.1 ? 0.0 : total;
-  });
+    const sumDb = totalAmp <= 1e-6 ? -120.0 : 20.0 * Math.log10(totalAmp);
+    const finalVal = baseCurve[i] + offsetDb + sumDb;
+    result.push(Math.abs(finalVal) < 0.1 ? 0.0 : finalVal);
+  }
+  return result;
 }

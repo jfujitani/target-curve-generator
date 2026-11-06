@@ -17,8 +17,8 @@ import { Exporter } from "./exporter.js";
 
 // Standard channel setup: 3-way with front sub and rear sub
 const DEFAULT_CHANNELS = [
-  { id: "sub2", name: "Rear Sub", fileTag: "Sub2", color: "#e040fb", active: true, hp: 20, lp: 60, lastActiveHp: 20, lastActiveLp: 60, slope: "LR24" },
-  { id: "sub1", name: "Front Sub", fileTag: "Sub1", color: "#2979ff", active: true, hp: 25, lp: 80, lastActiveHp: 25, lastActiveLp: 80, slope: "LR24" },
+  { id: "sub2", name: "Rear Sub", fileTag: "Sub2", color: "#e040fb", active: true, hp: 0, lp: 40, lastActiveHp: 20, lastActiveLp: 40, slope: "LR24" },
+  { id: "sub1", name: "Front Sub", fileTag: "Sub1", color: "#2979ff", active: true, hp: 40, lp: 80, lastActiveHp: 40, lastActiveLp: 80, slope: "LR24" },
   { id: "mb", name: "Midbass", fileTag: "MB", color: "#00e676", active: true, hp: 80, lp: 350, lastActiveHp: 80, lastActiveLp: 350, slope: "LR24" },
   { id: "mid", name: "Midrange", fileTag: "Mid", color: "#ff9100", active: true, hp: 350, lp: 3500, lastActiveHp: 350, lastActiveLp: 3500, slope: "LR24" },
   { id: "tw", name: "Tweeter", fileTag: "Tw", color: "#ffd600", active: true, hp: 3500, lp: 0, lastActiveHp: 3500, lastActiveLp: 18000, slope: "LR24" }
